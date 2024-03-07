@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import './globals.css';
+import React, { useEffect, useState, useRef } from 'react';
+import Board from './board/Board.jsx';
+import Panel from './panel/Panel.jsx';
+import * as tetris from './gameEngine.js';
 
-function App() {
+export default function App() {
+
+  const [nextPiece, setNextPiece] = useState(tetris?.bag[0]);
+  const [level, setLevel] = useState(1);
+  const [lines, setLines] = useState(0);
+
+  const state = {
+    setNextPiece,
+    setLevel,
+    setLines
+  }
+
+  const canvasRef = useRef(null);
+  let context = null;
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    context = canvas.getContext('2d');
+    tetris.start(context, state);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+    <main className="fixed bg-diagonal-stripes-light font-['Angies-New-House']">
+      <div className="my-10 mx-12 flex flex-row">
+        < Board
+          canvasRef={canvasRef}
+        />
+        < Panel
+          context={context}
+          nextPiece={nextPiece}
+          level={level}
+          lines={lines}
+        />
+      </div>
+    </main>
+  )
+};
