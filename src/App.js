@@ -9,11 +9,13 @@ export default function App() {
   const [nextPiece, setNextPiece] = useState(tetris?.bag[0]);
   const [level, setLevel] = useState(1);
   const [lines, setLines] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   const state = {
     setNextPiece,
     setLevel,
-    setLines
+    setLines,
+    setPaused
   }
 
   const canvasRef = useRef(null);
@@ -36,6 +38,8 @@ export default function App() {
           nextPiece={nextPiece}
           level={level}
           lines={lines}
+          paused={paused}
+          setPaused={setPaused}
         />
       </div>
     </main>
