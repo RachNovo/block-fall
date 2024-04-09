@@ -4,6 +4,7 @@
 2. [Getting Started](#getting-started)
 3. [Future Improvements](#future-improvements)
 4. [Tech Highlights](#tech-highlights)
+<img width="547" alt="Screenshot 2024-04-09 at 3 13 49 PM" src="https://github.com/RachNovo/tetris/assets/44451197/f9a5985c-813a-46f1-a883-3fabedb4f21e">
 
 ## Overview
 
