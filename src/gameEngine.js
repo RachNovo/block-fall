@@ -103,7 +103,7 @@ const rotationFormula = {
     state = stateFuncs;
     context = contextStore;
     level = 1;
-    paused = false;
+    paused = state.paused;
     if(intervalId === 0) {
       console.log('game has started');
       intervalId = setInterval(() => {

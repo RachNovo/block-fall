@@ -25,7 +25,16 @@ export default function App() {
     const canvas = canvasRef.current;
     context = canvas.getContext('2d');
     tetris.start(context, state);
+    handlePaused();
   }, []);
+
+  useEffect(() => {
+    tetris.pause();
+  }, [paused]);
+
+  const handlePaused = () => {
+    setPaused(!paused);
+  };
 
   return (
     <main className="fixed bg-diagonal-stripes-light font-['Angies-New-House']">
@@ -38,8 +47,7 @@ export default function App() {
           nextPiece={nextPiece}
           level={level}
           lines={lines}
-          paused={paused}
-          setPaused={setPaused}
+          handlePaused={handlePaused}
         />
       </div>
     </main>
