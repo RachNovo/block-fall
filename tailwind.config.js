@@ -11,7 +11,12 @@ module.exports = {
         },
         colors: {
           'dark-blue': '#6879a6',
-          'light-blue': '#ccdcf3'
+          'light-blue': '#ccdcf3',
+          'hover-blue': '#484c6c'
+        },
+        fontFamily: {
+          angies: 'Angies-New-House',
+          objectivityBold: 'Objectivity-Bold'
         }
       }
     },
