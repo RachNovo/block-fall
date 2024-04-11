@@ -1,26 +1,5 @@
-
-// if (typeof window !== 'undefined') {
-//   const startEl = document.getElementById("start");
-//   startEl.addEventListener("click", () => {
-//     start();
-//   });
-
-//   const pauseEl = document.getElementById("pause");
-//   pauseEl.addEventListener("click", () => {
-//     pause();
-//   });
-
-//   const quitEl = document.getElementById("quit");
-//   quitEl.addEventListener("click", () => {
-//     quit();
-//   });
-// }
-
-
 /*
 Tetris
-
-
 
 -fun facts on start page
   -how much faster is each level
@@ -33,10 +12,26 @@ Tetris
   -what's the music in the game
   -what the pieces are called
   -origin of the tetrinimos
-
-window.requestAnimationFrame(main);
-event handlers
-
+  -What tetris game version this is (n-blox)
+  -rotation formula I decided to use
+  -about how I add pieces (bag)
+  -origin of the word tetris
+  -Tetris was first programmed on an Electronika 60, a Soviet computer, using Pascal programming language.
+  -Tetris was created by Alexey Pajitnov, a Russian computer scientist, in 1984.
+  -The name "Tetris" is a combination of "tetra" (the Greek word meaning "four") and "tennis," Pajitnov's favorite sport.
+  -The iconic Tetris theme song, known as "Korobeiniki," is a Russian folk tune dating back to the 19th century.
+  -psychology studies
+  -longest known game
+  -Tetris world Championship
+  -The tetris effect
+  -https://tetris.fandom.com/wiki/List_of_curiosities
+  -The names of the Tetriminos
+  -https://tetris.com/fun-facts
+  -https://en.wikipedia.org/wiki/Tetris
+  -Alexey Pajitnov now
+  -name of the original color (green) on elektronika 60 and colors of ibm original
+  -first in space!
+  -what it's called when you hit the wall
 
 */
 
