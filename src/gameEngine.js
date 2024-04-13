@@ -83,15 +83,13 @@ const rotationFormula = {
   
   let board = [];
   let bag = [];
-  let speed = 1;
   let level = 1;
   let lines = 0;
-  let delay = 800;
-  let intervalId = 0;
+  let delay = 1000;
   let paused = false;
+  let gameOver = false;
   let context = null;
   let currentPiece = '';
-  let pieceNum = 0;
   let state = {};
   
   const start = (contextStore, stateFuncs) => {
@@ -99,24 +97,28 @@ const rotationFormula = {
     context = contextStore;
     level = 1;
     paused = state.paused;
-    if(intervalId === 0) {
-      console.log('game has started');
-      intervalId = setInterval(() => {
-        if(!paused) {
-          listen(board);
-          lineHandler();
-          if(!existsCurrentPiece(board)) addPiece();
-          bag.length === 0 && fillBag();
-          state.setNextPiece(bag[0]);
-          move('down');
-        }
-      }, delay);
+    console.log('game has started');
+    setTimeout(gameLoop, delay);
+  };
+
+  const gameLoop = () => {
+    if(!paused) {
+      listen(board);
+      lineHandler();
+      if(!existsCurrentPiece(board)) addPiece();
+      bag.length === 0 && fillBag();
+      state.setNextPiece(bag[0]);
+      move('down');
+    }
+    if (!gameOver) {
+      setTimeout(gameLoop, delay);
     }
   };
   
   const listen = () => {
     if (typeof window !== 'undefined') {
       document.onkeydown = function(event, context) {
+        event.preventDefault();
     
         const moveLeft = (context) => move('left', context);
         const moveRight = (context) => move('right', context);
@@ -131,6 +133,9 @@ const rotationFormula = {
           ArrowDown: moveDown,
           KeyP: pause,
           KeyQ: quit
+        }
+        if (event.metaKey && event.code === 'KeyR') {
+          document.location.reload();
         }
         if (event.code) {
           codes[event.code]?.(context);
@@ -187,7 +192,6 @@ const rotationFormula = {
       currentPiece.subSection = subPiece;
       newBoard[positions[subPiece][0]][positions[subPiece][1]] = currentPiece;
     }
-    pieceNum++;
     board = newBoard;
   };
   
@@ -284,7 +288,6 @@ const rotationFormula = {
           level++;
           state.setLevel(level);
           delay = delay - 50;
-          console.log('delay is: ', delay);
         }
         newBoard.splice(rowIndex, 1);
         newBoard.unshift([null, null, null, null, null, null, null, null, null, null]);
@@ -295,9 +298,8 @@ const rotationFormula = {
   };
   
   const quit = () => {
+    gameOver = true;
     console.log('game is over/quit');
-    clearInterval(intervalId);
-    intervalId = undefined;
   };
   
   const canMove = (direction) => {
@@ -319,33 +321,35 @@ const rotationFormula = {
   };
   
   const move = (direction) => {
-    const newBoard = createBlankBoard();
-    if (!canMove(direction)) {
-      if(direction === 'down') {
-        board?.forEach((row) => {
-          row?.forEach((space) => {
-            if (space?.isCurrent) {
-              space.isCurrent = false;
-            };
+    if (!paused) {
+      const newBoard = createBlankBoard();
+      if (!canMove(direction)) {
+        if(direction === 'down') {
+          board?.forEach((row) => {
+            row?.forEach((space) => {
+              if (space?.isCurrent) {
+                space.isCurrent = false;
+              };
+            });
           });
-        });
-      } else {
-        return;
-      };
+        } else {
+          return;
+        };
+      }
+      board?.forEach((row, rowIndex) => {
+        row?.forEach((space, spaceIndex) => {
+          if (space?.isCurrent) {
+            if (direction === 'down') newBoard[rowIndex + 1].splice(spaceIndex, 1, space);
+            if (direction === 'left') newBoard[rowIndex].splice(spaceIndex - 1, 1, space);
+            if (direction === 'right') newBoard[rowIndex].splice(spaceIndex + 1, 1, space);
+          } else if (space !== null) {
+            newBoard[rowIndex].splice(spaceIndex, 1, space);
+          }
+        })
+      });
+      board = newBoard;
+      drawBoard(context);
     }
-    board?.forEach((row, rowIndex) => {
-      row?.forEach((space, spaceIndex) => {
-        if (space?.isCurrent) {
-          if (direction === 'down') newBoard[rowIndex + 1].splice(spaceIndex, 1, space);
-          if (direction === 'left') newBoard[rowIndex].splice(spaceIndex - 1, 1, space);
-          if (direction === 'right') newBoard[rowIndex].splice(spaceIndex + 1, 1, space);
-        } else if (space !== null) {
-          newBoard[rowIndex].splice(spaceIndex, 1, space);
-        }
-      })
-    });
-    board = newBoard;
-    drawBoard(context);
   };
   
   const hardMoveDown = () => {
@@ -373,21 +377,23 @@ const rotationFormula = {
   };
   
   const rotate = () => {
-    if (!canRotate()) return board;
-    let newBoard = createBlankBoard();
-    board?.forEach((row, rowIndex) => {
-      row?.forEach((space, spaceIndex) => {
-        if (space?.isCurrent) {
-          const nextOrientation = space.orientation < 3 ? space.orientation + 1 : 0;
-          const positionFormula = rotationFormula[space.piece][space.subSection][nextOrientation];
-          newBoard[rowIndex + positionFormula[0]][spaceIndex + positionFormula[1]] = { ...space, orientation: nextOrientation };
-        } else if (space !== null) {
-          newBoard[rowIndex].splice(spaceIndex, 1, space);
-        };
+    if (!paused) {
+      if (!canRotate()) return board;
+      let newBoard = createBlankBoard();
+      board?.forEach((row, rowIndex) => {
+        row?.forEach((space, spaceIndex) => {
+          if (space?.isCurrent) {
+            const nextOrientation = space.orientation < 3 ? space.orientation + 1 : 0;
+            const positionFormula = rotationFormula[space.piece][space.subSection][nextOrientation];
+            newBoard[rowIndex + positionFormula[0]][spaceIndex + positionFormula[1]] = { ...space, orientation: nextOrientation };
+          } else if (space !== null) {
+            newBoard[rowIndex].splice(spaceIndex, 1, space);
+          };
+        });
       });
-    });
-    board = newBoard;
-    drawBoard(context);
+      board = newBoard;
+      drawBoard(context);
+    }
   };
   
   export {
