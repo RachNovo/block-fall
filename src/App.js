@@ -25,7 +25,6 @@ export default function App() {
     const canvas = canvasRef.current;
     context = canvas.getContext('2d');
     tetris.start(context, state);
-    handlePaused();
   }, []);
 
   useEffect(() => {
