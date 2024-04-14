@@ -154,12 +154,10 @@ const rotationFormula = {
     board?.forEach((row, rowIndex) => {
       row?.forEach((space, spaceIndex) => {
         if (space !== null) {
-          context.rect(0, 0, context.canvas.width, context.canvas.height);
           context.fillStyle = colors[space.piece];
           context.fillRect(spaceIndex * pieceSize, rowIndex * pieceSize, pieceSize, pieceSize);
           context.strokeStyle = "black";
-          const offSet = spaceIndex === 0 ? .5 : -.5;
-          context.strokeRect(spaceIndex * pieceSize + offSet, rowIndex * pieceSize - .5, pieceSize, pieceSize);
+          context.strokeRect(spaceIndex * pieceSize + .5, rowIndex * pieceSize - .5, pieceSize, pieceSize);
         };
       })
     });
