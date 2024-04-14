@@ -1,16 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 export default function NextPiece({nextPiece}) {
 
   const nextPieceRef = useRef(null);
-  let context = null;
-
-  // useEffect(() => {
-  //   const canvas = nextPieceRef.current;
-  //   context = canvas.getContext('2d');
-  //   canvas.style.width ='100%';
-  //   canvas.style.height='100%';
-  // }, []);
 
   const colors = {
     I: '#58c4f4',
@@ -34,13 +26,10 @@ export default function NextPiece({nextPiece}) {
   if (nextPiece) {
     const canvas = nextPieceRef.current;
     const ctx = canvas.getContext('2d');
-    // ctx.canvas.style.width = 'inherit';
-    // ctx.canvas.style.height= 'inherit';
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     for(let subPiece in spawnPositions[nextPiece]) {
       const y = spawnPositions[nextPiece][subPiece][0] + .5;
       const x = spawnPositions[nextPiece][subPiece][1] - 1;
-      // console.log('size', ctx.canvas.width/2, ctx.canvas.height/2);
       ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
       ctx.fillStyle = colors[nextPiece];
       ctx.fillRect(x * pieceSize, y * pieceSize, pieceSize, pieceSize);
