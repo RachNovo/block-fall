@@ -95,10 +95,9 @@ const rotationFormula = {
   
   const start = (contextStore, stateFuncs) => {
     if (intervalID === 0) {
-      state = stateFuncs;
       context = contextStore;
+      state = stateFuncs;
       level = 1;
-      paused = false;
       console.log('game has started');
       intervalID = setInterval(gameLoop, delay);
       listen(board);
