@@ -91,6 +91,7 @@ const rotationFormula = {
   let context = null;
   let currentPiece = '';
   let state = {};
+  let intervalID = 0;
   
   const start = (contextStore, stateFuncs) => {
     state = stateFuncs;
@@ -98,21 +99,22 @@ const rotationFormula = {
     level = 1;
     paused = state.paused;
     console.log('game has started');
-    setTimeout(gameLoop, delay);
+    intervalID = setInterval(gameLoop, delay);
   };
 
   const gameLoop = () => {
-    if(!paused) {
-      listen(board);
-      lineHandler();
-      if(!existsCurrentPiece(board)) addPiece();
-      bag.length === 0 && fillBag();
-      state.setNextPiece(bag[0]);
-      move('down');
-    }
     if (!gameOver) {
-      setTimeout(gameLoop, delay);
-    }
+      if(!paused) {
+        listen(board);
+        lineHandler();
+        if(!existsCurrentPiece(board)) addPiece();
+        bag.length === 0 && fillBag();
+        state.setNextPiece(bag[0]);
+        move('down');
+      }
+    } else {
+      clearInterval(intervalID);
+    };
   };
   
   const listen = () => {
@@ -288,6 +290,8 @@ const rotationFormula = {
           level++;
           state.setLevel(level);
           delay = delay - 50;
+          clearInterval(intervalID);
+          intervalID = setInterval(gameLoop, delay);
         }
         newBoard.splice(rowIndex, 1);
         newBoard.unshift([null, null, null, null, null, null, null, null, null, null]);
@@ -321,7 +325,7 @@ const rotationFormula = {
   };
   
   const move = (direction) => {
-    if (!paused) {
+    if (!paused && !gameOver) {
       const newBoard = createBlankBoard();
       if (!canMove(direction)) {
         if(direction === 'down') {
@@ -377,7 +381,7 @@ const rotationFormula = {
   };
   
   const rotate = () => {
-    if (!paused) {
+    if (!paused && !gameOver) {
       if (!canRotate()) return board;
       let newBoard = createBlankBoard();
       board?.forEach((row, rowIndex) => {
