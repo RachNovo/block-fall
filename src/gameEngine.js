@@ -94,45 +94,38 @@ const rotationFormula = {
   let intervalID = 0;
   
   const start = (contextStore, stateFuncs) => {
-    state = stateFuncs;
-    context = contextStore;
-    level = 1;
-    paused = state.paused;
-    console.log('game has started');
-    intervalID = setInterval(gameLoop, delay);
+    if (intervalID === 0) {
+      state = stateFuncs;
+      context = contextStore;
+      level = 1;
+      paused = state.paused;
+      console.log('game has started');
+      intervalID = setInterval(gameLoop, delay);
+      listen(board);
+      paused = !paused;
+    }
   };
 
   const gameLoop = () => {
-    if (!gameOver) {
-      if(!paused) {
-        listen(board);
-        lineHandler();
-        if(!existsCurrentPiece(board)) addPiece();
-        bag.length === 0 && fillBag();
-        state.setNextPiece(bag[0]);
-        move('down');
-      }
-    } else {
-      clearInterval(intervalID);
-    };
+    if(!paused) {
+      lineHandler();
+      if(!existsCurrentPiece(board)) addPiece();
+      bag.length === 0 && fillBag();
+      state.setNextPiece(bag[0]);
+      move('down');
+    }
   };
   
   const listen = () => {
     if (typeof window !== 'undefined') {
-      document.onkeydown = function(event, context) {
+      document.onkeydown = function(event) {
         event.preventDefault();
-    
-        const moveLeft = (context) => move('left', context);
-        const moveRight = (context) => move('right', context);
-        const moveDown = (context) => move('down', context);
-        const rotatePiece = (context) => rotate('down', context);
-    
         const codes = {
           Space: hardMoveDown,
-          ArrowLeft: moveLeft,
-          ArrowUp: rotatePiece,
-          ArrowRight: moveRight,
-          ArrowDown: moveDown,
+          ArrowLeft: () => move('left'),
+          ArrowUp: () => rotate(),
+          ArrowRight: () => move('right'),
+          ArrowDown: () => move('down'),
           KeyP: pause,
           KeyQ: quit
         }
@@ -140,7 +133,7 @@ const rotationFormula = {
           document.location.reload();
         }
         if (event.code) {
-          codes[event.code]?.(context);
+          codes[event.code]?.();
         };
       };
     }
@@ -303,6 +296,7 @@ const rotationFormula = {
   
   const quit = () => {
     gameOver = true;
+    clearInterval(intervalID);
     console.log('game is over/quit');
   };
   
