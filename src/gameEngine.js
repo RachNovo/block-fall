@@ -102,6 +102,7 @@ const rotationFormula = {
       console.log('game has started');
       intervalID = setInterval(gameLoop, delay);
       listen(board);
+      if (paused === false) paused = !paused;
     }
   };
 
