@@ -3,13 +3,13 @@ import Stats from './Stats.jsx';
 import Controls from './Controls.jsx';
 import Legend from './Legend.jsx';
 
-export default function Panel({context, nextPiece, level, lines, handlePaused}) {
+export default function Panel({context, nextPiece, level, lines, handlePaused, gameActive}) {
 
   return (
-    <div className='basis-1/2'>
+    <div className='.panel'>
       < NextPiece context={context} nextPiece={nextPiece}/>
-      < Stats level={level} lines={lines}/>
-      < Controls handlePaused={handlePaused}/>
+      < Stats level={level} lines={lines} gameActive={gameActive}/>
+      < Controls handlePaused={handlePaused} gameActive={gameActive}/>
       < Legend />
     </div>
   )

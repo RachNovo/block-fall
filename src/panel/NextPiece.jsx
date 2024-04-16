@@ -40,7 +40,7 @@ export default function NextPiece({nextPiece}) {
   }
 
   return (
-    <div className='h-36 w-48 border-dark-blue border-4 mb-2 bg-light-blue p-2 w-40'>
+    <div className='h-36 w-48 border-dark-blue border-[5px] mb-2 bg-light-blue p-2'>
       <canvas ref={nextPieceRef} id="nextPieceCanvas"></canvas>
     </div>
   )

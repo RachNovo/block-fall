@@ -1,6 +1,6 @@
 export default function Legend() {
     return (
-        <div className='bg-light-blue border-dark-blue border-4 divide-y-4 divide-dark-blue'>
+        <div className='bg-light-blue border-dark-blue border-[5px] divide-y-4 divide-dark-blue'>
             <div className='px-0.5 text-xs tracking-tighter pl-2 pt-2 pr-2 pb-2 flex justify-between text-dark-blue font-objectivityBold'>
                 < ControlTable />
             </div>

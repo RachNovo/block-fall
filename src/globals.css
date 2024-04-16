@@ -25,6 +25,16 @@ body {
   width: 250px;
 }
 
+.modalsSize {
+  height: 510px;
+  width: 260px;
+}
+
+.panelSize {
+  height: 500px;
+  width: 250px;
+}
+
 @font-face {
   font-family: 'Angies-New-House';
   src:url('../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.woff') format('woff'),
