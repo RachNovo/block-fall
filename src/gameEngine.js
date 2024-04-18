@@ -62,8 +62,8 @@ const rotationFormula = {
       state = stateFuncs;
       level = state.level;
       delay = 1000 - ((level - 1) * 50);
-      console.log(delay, state);
-      // ((startingLevel - 1) * delayDecreasePerLevel)
+      paused = state.paused;
+      gameOver = state.gameOver;
       console.log('game has started');
       intervalID = setInterval(gameLoop, delay);
       listen(board);
@@ -232,6 +232,7 @@ const rotationFormula = {
   
   const pause = () => {
     paused = !paused;
+    state.setPaused(paused);
     console.log(`game is paused: ${paused}`);
   };
   
@@ -258,6 +259,7 @@ const rotationFormula = {
   
   const quit = () => {
     gameOver = true;
+    state.setGameOver(gameOver);
     clearInterval(intervalID);
     console.log('game is over/quit');
   };

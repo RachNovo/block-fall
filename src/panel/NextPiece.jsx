@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-export default function NextPiece({nextPiece}) {
+export default function NextPiece({nextPiece, paused}) {
 
   const nextPieceRef = useRef(null);
 
@@ -39,9 +39,11 @@ export default function NextPiece({nextPiece}) {
     }
   }
 
+  const display = paused ? 'hidden' : '';
+
   return (
     <div className='h-36 w-48 border-dark-blue border-[5px] mb-2 bg-light-blue p-2'>
-      <canvas ref={nextPieceRef} id="nextPieceCanvas"></canvas>
+      <canvas className={`${display}`} ref={nextPieceRef} id="nextPieceCanvas"></canvas>
     </div>
   )
 };

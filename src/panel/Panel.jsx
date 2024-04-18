@@ -1,16 +1,15 @@
 import NextPiece from './NextPiece.jsx';
 import Stats from './Stats.jsx';
 import Controls from './Controls.jsx';
-import Legend from './Legend.jsx';
 
-export default function Panel({context, nextPiece, level, lines, handlePaused, gameActive}) {
+export default function Panel({context, nextPiece, level, lines, handlePaused, paused, gameActive, gameOver}) {
+  const opacity = !gameActive || paused || gameOver ? 'opacity-75' : '';
 
   return (
-    <div className='.panel'>
-      < NextPiece context={context} nextPiece={nextPiece}/>
+    <div className={`${opacity} .panel`}>
+      < NextPiece context={context} nextPiece={nextPiece} paused={paused}/>
       < Stats level={level} lines={lines} gameActive={gameActive}/>
-      < Controls handlePaused={handlePaused} gameActive={gameActive}/>
-      < Legend />
+      < Controls handlePaused={handlePaused} paused={paused} gameOver={gameOver} gameActive={gameActive}/>
     </div>
   )
 };
