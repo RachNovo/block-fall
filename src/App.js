@@ -7,6 +7,9 @@ import GameOverModal from './modals/GameOverModal.jsx';
 import HelpModal from './modals/HelpModal.jsx';
 import Panel from './panel/Panel.jsx';
 import * as tetris from './gameEngine.js';
+import piano from './assets/music/piano.mp3';
+import strings from './assets/music/strings.mp3';
+import cossack from './assets/music/cossack.mp3';
 
 export default function App() {
 
@@ -17,6 +20,17 @@ export default function App() {
   const [gameActive, setGameActive] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [sound, setSound] = useState(false);
+  const [volume, setVolume] = useState(100);
+  const [musicType, setMusicType] = useState('piano');
+  const pianoAudioRef = useRef(new Audio(piano));
+  const stringsAudioRef = useRef(new Audio(strings));
+  const cossackAudioRef = useRef(new Audio(cossack));
+  const TYPES = {
+    piano: pianoAudioRef.current,
+    strings: stringsAudioRef.current,
+    cossack: cossackAudioRef.current,
+  };
 
   const state = {
     setNextPiece,
@@ -29,6 +43,51 @@ export default function App() {
     gameOver,
     setGameOver
   };
+
+  const handleSound = () => {
+    setSound(!sound);
+  };
+
+  const volumeUp = () => {
+    const newVolume = volume < 100 ? volume + 10 : volume
+    setVolume(newVolume);
+  };
+
+  const volumeDown = () => {
+    const newVolume = volume > 0 ? volume - 10 : volume;
+    setVolume(newVolume);
+  };
+
+  const musicTypeHandler = () => {
+    const typeKeys = Object.keys(TYPES);
+    const currentIndex = typeKeys.indexOf(musicType);
+    if (currentIndex >= 0 && currentIndex < typeKeys.length - 1) {
+      setMusicType(typeKeys[currentIndex + 1]);
+    } else {
+      setMusicType(typeKeys[0]);
+    }
+    if (!sound) {
+      handleSound(true);
+    }
+  };
+
+  useEffect(() => {
+    const currentAudio = TYPES[musicType];
+    Object.values(TYPES).forEach(audio => {
+      if (audio !== currentAudio) {
+        audio.pause();
+      }
+    });
+    const startTime = musicType === 'piano' ? 1.6 : 'strings' ? 1 : 0;
+    currentAudio.currentTime = startTime;
+    if (sound) {
+      currentAudio.play();
+    } else {
+      currentAudio.pause();
+    }
+    currentAudio.loop = true;
+    currentAudio.volume = musicType === 'cossack' ? (volume * 0.1) * 0.01 : volume * .01;
+  }, [sound, volume, musicType]);
 
   const handlePaused = () => {
     tetris.pause();
@@ -68,7 +127,14 @@ export default function App() {
     <main className="fixed bg-diagonal-stripes-light font-['Angies-New-House']">
       <div className="my-10 mx-12 flex flex-row">
         {(paused && showHelp) && (
-          <HelpModal handleHelp={handleHelp} />
+          <HelpModal
+            handleHelp={handleHelp}
+            volume={volume}
+            volumeUp={volumeUp}
+            volumeDown={volumeDown}
+            musicTypeHandler={musicTypeHandler}
+            musicType={musicType}
+          />
         )}
         {(paused && !showHelp) && (
           <PausedModal
@@ -102,6 +168,8 @@ export default function App() {
           nextPiece={nextPiece}
           level={level}
           lines={lines}
+          sound={sound}
+          handleSound={handleSound}
           handlePaused={handlePaused}
           paused={paused}
           gameActive={gameActive}

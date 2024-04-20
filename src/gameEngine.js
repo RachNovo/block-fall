@@ -43,12 +43,16 @@ const rotationFormula = {
       d: [[1, 1], [1, -1], [-1, -1], [-1, 1]]
     }
   };
+
+  const calculateDelay = (baseDelay, level) => {
+    return Math.max(100, baseDelay * Math.pow(0.95, level - 1));
+  };
   
   let board = [];
   let bag = [];
   let level = 1;
   let lines = 0;
-  let delay = 1000;
+  let delay = calculateDelay(1000, level);
   let paused = false;
   let gameOver = false;
   let context = null;
@@ -61,7 +65,7 @@ const rotationFormula = {
       context = contextStore;
       state = stateFuncs;
       level = state.level;
-      delay = 1000 - ((level - 1) * 50);
+      delay = calculateDelay(1000, level);
       paused = state.paused;
       gameOver = state.gameOver;
       console.log('game has started');
@@ -245,7 +249,7 @@ const rotationFormula = {
         if (lines >= level * 10) {
           level++;
           state.setLevel(level);
-          delay = delay - 50;
+          delay = calculateDelay(delay, level);
           clearInterval(intervalID);
           intervalID = setInterval(gameLoop, delay);
         }
@@ -315,7 +319,6 @@ const rotationFormula = {
   };
   
   const hardMoveDown = () => {
-    if (!canMove('down')) return;
     for(let i = 0; i < 20; i++) {
       move('down');
     }

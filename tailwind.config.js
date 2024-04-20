@@ -14,7 +14,8 @@ module.exports = {
           'background-blue': '#ddeeff',
           'light-blue': '#ccdcf3',
           'hover-dark-blue': '#484c6c',
-          'hover-light-blue': '#a8c4ec'
+          'hover-light-blue': '#a8c4ec',
+          'grey': '#3d3d3d'
         },
         fontFamily: {
           angies: 'Angies-New-House',

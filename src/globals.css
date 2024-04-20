@@ -20,6 +20,10 @@ body {
   background-color: #ddeeff;
 }
 
+.sound-icon:hover {
+  color: #484c6c; /* Change to your hover color */
+}
+
 #boardCanvas {
   height: 500px;
   width: 250px;
