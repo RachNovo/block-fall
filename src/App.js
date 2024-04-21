@@ -78,16 +78,30 @@ export default function App() {
         audio.pause();
       }
     });
-    const startTime = musicType === 'piano' ? 1.6 : 'strings' ? 1 : 0;
+    const startTime = musicType === 'piano' ? 1.6 : musicType === 'strings' ? 1 : 0;
     currentAudio.currentTime = startTime;
+    currentAudio.loop = true;
+    if (musicType === 'cossack') {
+      currentAudio.volume = volume * 0.001;
+    }
+    if (sound) {
+      currentAudio.play();
+    }
+  }, [musicType]);
+
+  useEffect(() => {
+    const currentAudio = TYPES[musicType];
     if (sound) {
       currentAudio.play();
     } else {
       currentAudio.pause();
     }
-    currentAudio.loop = true;
-    currentAudio.volume = musicType === 'cossack' ? (volume * 0.1) * 0.01 : volume * .01;
-  }, [sound, volume, musicType]);
+  }, [sound]);
+
+  useEffect(() => {
+    const currentAudio = TYPES[musicType];
+    currentAudio.volume = volume * (musicType === 'cossack' ? 0.001 : 0.01);
+  }, [volume]);
 
   const handlePaused = () => {
     tetris.pause();
