@@ -21,24 +21,24 @@ export default function StartModal({
   };
 
   return (
-    <div className="flex flex-col items-center modalsSize p-2 pt-5 bg-diagonal-stripes-dark border-dark-blue border-[5px] mr-2">
+    <div className="modalsSize mr-2 flex flex-col items-center border-[5px] border-dark-blue bg-diagonal-stripes-dark p-2 pt-5">
       <button
         onClick={handleGameActive}
-        className="p-3 px-8 m-2 text-4xl bg-background-blue border-dark-blue border-[5px] hover:bg-hover-light-blue"
+        className="m-2 border-[5px] border-dark-blue bg-background-blue p-3 px-8 text-4xl hover:bg-hover-light-blue"
       >
         {" "}
         play game{" "}
       </button>
       <button
         onClick={handleUpdateLevel}
-        className="p-2 px-9 m-1 text-3xl text-dark-blue bg-background-blue border-dark-blue border-[5px] hover:bg-hover-light-blue"
+        className="m-1 border-[5px] border-dark-blue bg-background-blue p-2 px-9 text-3xl text-dark-blue hover:bg-hover-light-blue"
       >
         {" "}
         level: {level}{" "}
       </button>
       <div
         onClick={funFactHandler}
-        className="p-2 m-1 mt-2 text-s text-dark-blue bg-background-blue border-dark-blue border-[5px] font-objectivityBold"
+        className="text-s m-1 mt-2 border-[5px] border-dark-blue bg-background-blue p-2 font-objectivityBold text-dark-blue"
       >
         <u>Trivia:</u> <i>{funFact.fact} </i>
       </div>

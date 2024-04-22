@@ -10,7 +10,7 @@ export default function Board({
     gameActive && !paused && !gameOver && !showHelp ? "" : "opacity-75";
   return (
     <div
-      className={`${display} ${opacity} bg-diagonal-stripes-dark border-dark-blue border-[5px] mr-2`}
+      className={`${display} ${opacity} mr-2 border-[5px] border-dark-blue bg-diagonal-stripes-dark`}
     >
       <canvas
         ref={canvasRef}

@@ -13,7 +13,7 @@ export default function Controls({
     !paused && gameActive && !gameOver ? "" : "pointer-events-none hover:none";
 
   return (
-    <div className="text-4xl pl-2 pt-2 pr-2 pb-2">
+    <div className="pb-2 pl-2 pr-2 pt-2 text-4xl">
       <div
         className={`flex items-center justify-center text-dark-blue ${buttonActive}`}
       >

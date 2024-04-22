@@ -46,7 +46,7 @@ export default function NextPiece({ nextPiece, paused }) {
   const display = paused ? "hidden" : "";
 
   return (
-    <div className="h-36 w-48 border-dark-blue border-[5px] mb-2 bg-light-blue p-2">
+    <div className="mb-2 h-36 w-48 border-[5px] border-dark-blue bg-light-blue p-2">
       <canvas
         className={`${display}`}
         ref={nextPieceRef}

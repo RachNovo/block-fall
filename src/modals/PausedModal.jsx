@@ -4,26 +4,26 @@ export default function PausedModal({
   handleRestart,
 }) {
   return (
-    <div className="z-10 modalsSize p-2 pt-5 bg-diagonal-stripes-dark border-dark-blue border-[5px] mr-2">
-      <div className="flex flex-col items-center p-3 px-8 m-4 mt-5 bg-background-blue border-dark-blue border-[5px]">
-        <div className="text-dark-blue text-4xl">paused</div>
+    <div className="modalsSize z-10 mr-2 border-[5px] border-dark-blue bg-diagonal-stripes-dark p-2 pt-5">
+      <div className="m-4 mt-5 flex flex-col items-center border-[5px] border-dark-blue bg-background-blue p-3 px-8">
+        <div className="text-4xl text-dark-blue">paused</div>
         <button
           onClick={handlePaused}
-          className="p-2 px-8 m-2 text-4xl bg-background-blue border-dark-blue border-[5px] hover:bg-hover-light-blue"
+          className="m-2 border-[5px] border-dark-blue bg-background-blue p-2 px-8 text-4xl hover:bg-hover-light-blue"
         >
           {" "}
           resume{" "}
         </button>
         <button
           onClick={handleHelp}
-          className="text-dark-blue p-1 px-8 m-1 text-3xl bg-background-blue border-dark-blue border-[5px] hover:bg-hover-light-blue"
+          className="m-1 border-[5px] border-dark-blue bg-background-blue p-1 px-8 text-3xl text-dark-blue hover:bg-hover-light-blue"
         >
           {" "}
           help{" "}
         </button>
         <button
           onClick={handleRestart}
-          className="text-dark-blue p-1 px-8 m-1 text-3xl bg-background-blue border-dark-blue border-[5px] hover:bg-hover-light-blue"
+          className="m-1 border-[5px] border-dark-blue bg-background-blue p-1 px-8 text-3xl text-dark-blue hover:bg-hover-light-blue"
         >
           {" "}
           quit{" "}

@@ -140,8 +140,8 @@ export default function App() {
   };
 
   return (
-    <main className="m-4 fixed bg-diagonal-stripes-light font-['Angies-New-House']">
-      <div className="my-10 mx-12 flex flex-row">
+    <main className="fixed m-4 bg-diagonal-stripes-light font-['Angies-New-House']">
+      <div className="mx-12 my-10 flex flex-row">
         {paused && showHelp && (
           <HelpModal
             handleHelp={handleHelp}
