@@ -6,14 +6,16 @@ import PausedModal from './modals/PausedModal.jsx';
 import GameOverModal from './modals/GameOverModal.jsx';
 import HelpModal from './modals/HelpModal.jsx';
 import Panel from './panel/Panel.jsx';
-import * as tetris from './gameEngine.js';
+import { gameEngineState } from './gameEngine/gameState.js';
+import { pause } from './gameEngine/gameActions.js';
+import { start } from './gameEngine/gameState.js';
 import piano from './assets/music/piano.mp3';
 import strings from './assets/music/strings.mp3';
 import cossack from './assets/music/cossack.mp3';
 
 export default function App() {
 
-  const [nextPiece, setNextPiece] = useState(tetris?.bag[0]);
+  const [nextPiece, setNextPiece] = useState(gameEngineState.bag[0]);
   const [level, setLevel] = useState(1);
   const [lines, setLines] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -104,7 +106,7 @@ export default function App() {
   }, [volume]);
 
   const handlePaused = () => {
-    tetris.pause();
+    pause();
   };
 
   const handleGameActive = () => {
@@ -125,7 +127,7 @@ export default function App() {
     const canvas = canvasRef.current;
     if (canvas && gameActive) {
       const context = canvas.getContext('2d');
-      tetris.start(context, state);
+      start(context, state);
     }
   }, [canvasRef, state, gameActive]);
 
@@ -138,7 +140,7 @@ export default function App() {
   };
 
   return (
-    <main className="fixed bg-diagonal-stripes-light font-['Angies-New-House']">
+    <main className="m-4 fixed bg-diagonal-stripes-light font-['Angies-New-House']">
       <div className="my-10 mx-12 flex flex-row">
         {(paused && showHelp) && (
           <HelpModal
