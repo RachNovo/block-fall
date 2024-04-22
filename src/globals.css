@@ -40,21 +40,29 @@ body {
 }
 
 @font-face {
-  font-family: 'Angies-New-House';
-  src:url('../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.woff') format('woff'),
-      url('../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.svg') format('svg'),
-      url('../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.eot'),
-      url('../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.eot') format('embedded-opentype'); 
+  font-family: "Angies-New-House";
+  src:
+    url("../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.woff")
+      format("woff"),
+    url("../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.svg")
+      format("svg"),
+    url("../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.eot"),
+    url("../public/fonts/webfonts_Angies-New-House/Angies-New-House.ttf.eot")
+      format("embedded-opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Objectivity-Bold';
-  src:url('../public/fonts/webfonts_Objectivity-Bold/Objectivity-Bold.ttf.woff') format('woff'),
-      url('../public/fonts/webfonts_Objectivity-Bold/Objectivity-Bold.ttf.svg#Objectivity-Bold') format('svg'),
-      url('../public/fonts/webfonts_Objectivity-Bold/Objectivity-Bold.ttf.eot'),
-      url('../public/fonts/webfonts_Objectivity-Bold/Objectivity-Bold.ttf.eot?#iefix') format('embedded-opentype'); 
+  font-family: "Objectivity-Bold";
+  src:
+    url("../public/fonts/webfonts_Objectivity-Bold/Objectivity-Bold.ttf.woff")
+      format("woff"),
+    url("../public/fonts/webfonts_Objectivity-Bold/Objectivity-Bold.ttf.svg#Objectivity-Bold")
+      format("svg"),
+    url("../public/fonts/webfonts_Objectivity-Bold/Objectivity-Bold.ttf.eot"),
+    url("../public/fonts/webfonts_Objectivity-Bold/Objectivity-Bold.ttf.eot?#iefix")
+      format("embedded-opentype");
   font-weight: normal;
   font-style: normal;
 }

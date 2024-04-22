@@ -1,20 +1,19 @@
-import './globals.css';
-import React, { useEffect, useState, useRef } from 'react';
-import Board from './board/Board.jsx';
-import StartModal from './modals/StartModal.jsx';
-import PausedModal from './modals/PausedModal.jsx';
-import GameOverModal from './modals/GameOverModal.jsx';
-import HelpModal from './modals/HelpModal.jsx';
-import Panel from './panel/Panel.jsx';
-import { gameState } from './gameEngine/gameState.js';
-import { pause } from './gameEngine/gameActions.js';
-import { start } from './gameEngine/gameState.js';
-import piano from './assets/music/piano.mp3';
-import strings from './assets/music/strings.mp3';
-import cossack from './assets/music/cossack.mp3';
+import "./globals.css";
+import React, { useEffect, useState, useRef } from "react";
+import Board from "./board/Board.jsx";
+import StartModal from "./modals/StartModal.jsx";
+import PausedModal from "./modals/PausedModal.jsx";
+import GameOverModal from "./modals/GameOverModal.jsx";
+import HelpModal from "./modals/HelpModal.jsx";
+import Panel from "./panel/Panel.jsx";
+import { gameState } from "./gameEngine/gameState.js";
+import { pause } from "./gameEngine/gameActions.js";
+import { start } from "./gameEngine/gameState.js";
+import piano from "./assets/music/piano.mp3";
+import strings from "./assets/music/strings.mp3";
+import cossack from "./assets/music/cossack.mp3";
 
 export default function App() {
-
   const [nextPiece, setNextPiece] = useState(gameState.bag[0]);
   const [level, setLevel] = useState(1);
   const [lines, setLines] = useState(0);
@@ -24,7 +23,7 @@ export default function App() {
   const [showHelp, setShowHelp] = useState(false);
   const [sound, setSound] = useState(false);
   const [volume, setVolume] = useState(100);
-  const [musicType, setMusicType] = useState('piano');
+  const [musicType, setMusicType] = useState("piano");
   const pianoAudioRef = useRef(new Audio(piano));
   const stringsAudioRef = useRef(new Audio(strings));
   const cossackAudioRef = useRef(new Audio(cossack));
@@ -43,7 +42,7 @@ export default function App() {
     setGameActive,
     level,
     gameOver,
-    setGameOver
+    setGameOver,
   };
 
   const handleSound = () => {
@@ -51,7 +50,7 @@ export default function App() {
   };
 
   const volumeUp = () => {
-    const newVolume = volume < 100 ? volume + 10 : volume
+    const newVolume = volume < 100 ? volume + 10 : volume;
     setVolume(newVolume);
   };
 
@@ -75,15 +74,16 @@ export default function App() {
 
   useEffect(() => {
     const currentAudio = TYPES[musicType];
-    Object.values(TYPES).forEach(audio => {
+    Object.values(TYPES).forEach((audio) => {
       if (audio !== currentAudio) {
         audio.pause();
       }
     });
-    const startTime = musicType === 'piano' ? 1.6 : musicType === 'strings' ? 1 : 0;
+    const startTime =
+      musicType === "piano" ? 1.6 : musicType === "strings" ? 1 : 0;
     currentAudio.currentTime = startTime;
     currentAudio.loop = true;
-    if (musicType === 'cossack') {
+    if (musicType === "cossack") {
       currentAudio.volume = volume * 0.001;
     }
     if (sound) {
@@ -102,7 +102,7 @@ export default function App() {
 
   useEffect(() => {
     const currentAudio = TYPES[musicType];
-    currentAudio.volume = volume * (musicType === 'cossack' ? 0.001 : 0.01);
+    currentAudio.volume = volume * (musicType === "cossack" ? 0.001 : 0.01);
   }, [volume]);
 
   const handlePaused = () => {
@@ -126,7 +126,7 @@ export default function App() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas && gameActive) {
-      const context = canvas.getContext('2d');
+      const context = canvas.getContext("2d");
       start(context, state);
     }
   }, [canvasRef, state, gameActive]);
@@ -142,7 +142,7 @@ export default function App() {
   return (
     <main className="m-4 fixed bg-diagonal-stripes-light font-['Angies-New-House']">
       <div className="my-10 mx-12 flex flex-row">
-        {(paused && showHelp) && (
+        {paused && showHelp && (
           <HelpModal
             handleHelp={handleHelp}
             volume={volume}
@@ -152,7 +152,7 @@ export default function App() {
             musicType={musicType}
           />
         )}
-        {(paused && !showHelp) && (
+        {paused && !showHelp && (
           <PausedModal
             handlePaused={handlePaused}
             handleRestart={handleRestart}
@@ -168,10 +168,7 @@ export default function App() {
             handleHelp={handleHelp}
           />
         )}
-        { gameOver && (
-          < GameOverModal />
-        )
-        }
+        {gameOver && <GameOverModal />}
         <Board
           canvasRef={canvasRef}
           paused={paused}
@@ -179,8 +176,10 @@ export default function App() {
           gameOver={gameOver}
           showHelp={showHelp}
         />
-        < Panel
-          context={canvasRef.current ? canvasRef.current.getContext('2d') : null}
+        <Panel
+          context={
+            canvasRef.current ? canvasRef.current.getContext("2d") : null
+          }
           nextPiece={nextPiece}
           level={level}
           lines={lines}
@@ -193,5 +192,5 @@ export default function App() {
         />
       </div>
     </main>
-  )
-};
+  );
+}

@@ -1,21 +1,21 @@
 const calculateDelay = (baseDelay, level) => {
-    return Math.max(100, baseDelay * Math.pow(0.95, level - 1));
-  };
+  return Math.max(100, baseDelay * Math.pow(0.95, level - 1));
+};
 
 const createCopy = (board) => {
-const newBoard = createBlankBoard();
-board?.forEach((row, rowIndex) => {
+  const newBoard = createBlankBoard();
+  board?.forEach((row, rowIndex) => {
     row?.forEach((space, spaceIndex) => {
-    if (space !== null) {
+      if (space !== null) {
         newBoard[rowIndex].splice(spaceIndex, 1, space);
-    }
+      }
     });
-});
-return newBoard;
+  });
+  return newBoard;
 };
 
 const createBlankBoard = () => {
-return ([
+  return [
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
@@ -35,12 +35,8 @@ return ([
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null]
-]);
-}
-
-export {
-    calculateDelay,
-    createBlankBoard,
-    createCopy
+    [null, null, null, null, null, null, null, null, null, null],
+  ];
 };
+
+export { calculateDelay, createBlankBoard, createCopy };
