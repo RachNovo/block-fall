@@ -1,13 +1,14 @@
 import { createBlankBoard } from './util.js';
 import { drawBoard } from './gameBoard.js';
 import { ROTATIONFORMULA } from './constants.js';
-import { gameEngineState } from './gameState.js';
+import { gameState } from './gameState.js';
 
 const canMove = (direction) => {
-    let { board } = gameEngineState;
+    const { board } = gameState;
+    if (!board) return false;
     let canMove = true;
-    board?.forEach((row, rowIndex) => {
-        row?.forEach((space, spaceIndex) => {
+    board.forEach((row, rowIndex) => {
+        row.forEach((space, spaceIndex) => {
         if (space?.isCurrent) {
             let targetSpace;
             if (direction === 'left') targetSpace = row[spaceIndex - 1];
@@ -16,16 +17,17 @@ const canMove = (direction) => {
             if (!(targetSpace?.isCurrent || targetSpace === null)) {
             canMove = false;
             }
-        }
-        })
-    })
+        };
+        });
+        if (!canMove) return;
+    });
     return canMove;
 };
 
 const move = (direction) => {
-    let { paused, gameOver, board } = gameEngineState;
-    if (!paused && !gameOver) {
-        if (!canMove(direction)) {
+    const { paused, gameOver, board } = gameState;
+    if (paused || gameOver) return;
+    if (!canMove(direction)) {
         if(direction === 'down') {
             board?.forEach((row) => {
             row?.forEach((space) => {
@@ -37,22 +39,21 @@ const move = (direction) => {
         } else {
             return;
         };
-        }
-        const newBoard = createBlankBoard();
-        board?.forEach((row, rowIndex) => {
+    }
+    const newBoard = createBlankBoard();
+    board?.forEach((row, rowIndex) => {
         row?.forEach((space, spaceIndex) => {
             if (space?.isCurrent) {
-            if (direction === 'down') newBoard[rowIndex + 1].splice(spaceIndex, 1, space);
-            if (direction === 'left') newBoard[rowIndex].splice(spaceIndex - 1, 1, space);
-            if (direction === 'right') newBoard[rowIndex].splice(spaceIndex + 1, 1, space);
+                if (direction === 'down') newBoard[rowIndex + 1].splice(spaceIndex, 1, space);
+                if (direction === 'left') newBoard[rowIndex].splice(spaceIndex - 1, 1, space);
+                if (direction === 'right') newBoard[rowIndex].splice(spaceIndex + 1, 1, space);
             } else if (space !== null) {
             newBoard[rowIndex].splice(spaceIndex, 1, space);
             }
         })
-        });
-        gameEngineState.board = newBoard;
-        drawBoard();
-    }
+    });
+    gameState.board = newBoard;
+    drawBoard();
 };
 
 const hardMoveDown = () => {
@@ -62,7 +63,7 @@ const hardMoveDown = () => {
 };
 
 const canRotate = () => {
-    let { board } = gameEngineState;
+    const { board } = gameState;
     let canRotate = true;
     board?.forEach((row, rowIndex) => {
         row?.forEach((space, spaceIndex) => {
@@ -80,26 +81,25 @@ const canRotate = () => {
 };
 
 const rotate = () => {
-    let { paused, gameOver } = gameEngineState;
-    if (!paused && !gameOver) {
-        if (!canRotate()) return;
-        let newBoard = createBlankBoard();
-        // console.log('board', gameEngineState.board);
-        gameEngineState.board?.forEach((row, rowIndex) => {
+    const { paused, gameOver, board } = gameState;
+    if (paused || gameOver || !canRotate()) return;
+    let newBoard = createBlankBoard();
+    board?.forEach((row, rowIndex) => {
         row?.forEach((space, spaceIndex) => {
             if (space?.isCurrent) {
                 const nextOrientation = space.orientation < 3 ? space.orientation + 1 : 0;
                 const positionFormula = ROTATIONFORMULA[space.piece][space.subSection][nextOrientation];
-                // console.log('formula', space.piece, space.subSection, positionFormula);
-                newBoard[rowIndex + positionFormula[0]][spaceIndex + positionFormula[1]] = { ...space, orientation: nextOrientation };
+                const targetRow = newBoard[rowIndex + positionFormula[0]];
+                const targetIndex = spaceIndex + positionFormula[1];
+                targetRow[targetIndex] = { ...space, orientation: nextOrientation };
             } else if (space !== null) {
-                newBoard[rowIndex].splice(spaceIndex, 1, space);
+                newBoard[rowIndex][spaceIndex] = space;
+
             };
         });
-        });
-        gameEngineState.board = newBoard;
-        drawBoard();
-    }
+    });
+    gameState.board = newBoard;
+    drawBoard();
 };
 
 export {

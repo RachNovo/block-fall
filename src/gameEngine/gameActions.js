@@ -1,56 +1,48 @@
 import { gameLoop } from './gameState.js';
 import { createCopy, calculateDelay } from './util.js';
 import { drawBoard } from './gameBoard.js';
-import { gameEngineState } from './gameState.js';
+import { gameState } from './gameState.js';
 
 const existsCurrentPiece = () => {
-    let { board } = gameEngineState;
-    let existsCurrentPiece = false;
-    board.forEach((row) => {
-        row.forEach((space) => {
-        if (space?.isCurrent) {
-            existsCurrentPiece = true;
-        };
-        })
-    });
-    return existsCurrentPiece;
+    const { board } = gameState;
+    return board.some(row => row.some(space => space?.isCurrent));
 };
 
 const pause = () => {
-    let { state: { setPaused } } = gameEngineState;
-    gameEngineState.paused = !gameEngineState.paused;
-    setPaused(gameEngineState.paused);
-    console.log(`game is paused: ${gameEngineState.paused}`);
+    const { state: { setPaused } } = gameState;
+    gameState.paused = !gameState.paused;
+    setPaused(gameState.paused);
+    console.log(`Game is ${gameState.paused ? 'paused' : 'running'}`);
 };
 
 const lineHandler = () => {
-    let { state: {setLevel, setLines}, board } = gameEngineState;
+    const { state: {setLevel, setLines}, board } = gameState;
     const newBoard = createCopy(board);
-    board?.forEach((row, rowIndex) => {
+    board.forEach((row, rowIndex) => {
         if(!row.includes(null)) {
-            gameEngineState.lines++
-            setLines(gameEngineState.lines);
-            if (gameEngineState.lines >= gameEngineState.level * 10) {
-                gameEngineState.level++;
-                setLevel(gameEngineState.level);
-                gameEngineState.delay = calculateDelay(gameEngineState.delay, gameEngineState.level);
-                clearInterval(gameEngineState.intervalID);
-                gameEngineState.intervalID = setInterval(gameLoop, gameEngineState.delay);
+            gameState.lines++
+            setLines(gameState.lines);
+            if (gameState.lines >= gameState.level * 10) {
+                gameState.level++;
+                setLevel(gameState.level);
+                gameState.delay = calculateDelay(gameState.delay, gameState.level);
+                clearInterval(gameState.intervalID);
+                gameState.intervalID = setInterval(gameLoop, gameState.delay);
             }
             newBoard.splice(rowIndex, 1);
-            newBoard.unshift([null, null, null, null, null, null, null, null, null, null]);
+            newBoard.unshift(Array(row.length).fill(null));
         }
     })
-    gameEngineState.board = newBoard;
+    gameState.board = newBoard;
     drawBoard();
 };
 
 const quit = () => {
-    let { gameOver, intervalID, state: { setGameOver } } = gameEngineState;
-    gameEngineState.gameOver = true;
-    setGameOver(gameOver);
+    const { intervalID, state: { setGameOver } } = gameState;
+    gameState.gameOver = true;
+    setGameOver(gameState.gameOver);
     clearInterval(intervalID);
-    console.log('game is over/quit');
+    console.log('Game is over');
 };
 
 export {

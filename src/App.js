@@ -6,7 +6,7 @@ import PausedModal from './modals/PausedModal.jsx';
 import GameOverModal from './modals/GameOverModal.jsx';
 import HelpModal from './modals/HelpModal.jsx';
 import Panel from './panel/Panel.jsx';
-import { gameEngineState } from './gameEngine/gameState.js';
+import { gameState } from './gameEngine/gameState.js';
 import { pause } from './gameEngine/gameActions.js';
 import { start } from './gameEngine/gameState.js';
 import piano from './assets/music/piano.mp3';
@@ -15,7 +15,7 @@ import cossack from './assets/music/cossack.mp3';
 
 export default function App() {
 
-  const [nextPiece, setNextPiece] = useState(gameEngineState.bag[0]);
+  const [nextPiece, setNextPiece] = useState(gameState.bag[0]);
   const [level, setLevel] = useState(1);
   const [lines, setLines] = useState(0);
   const [paused, setPaused] = useState(false);

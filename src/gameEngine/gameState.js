@@ -4,7 +4,7 @@ import { listen } from './gameControls.js';
 import { move } from './gameMovements.js';
 import { calculateDelay, createBlankBoard } from './util.js';
 
-let gameEngineState = {
+let gameState = {
     board: createBlankBoard(),
     bag: [],
     level: 1,
@@ -19,34 +19,34 @@ let gameEngineState = {
 }
 
 const start = (contextStore, stateFuncs) => {
-  if (gameEngineState.intervalID === 0) {
-    gameEngineState.context = contextStore;
-    gameEngineState.state = stateFuncs;
-    gameEngineState.level = gameEngineState.state.level;
-    gameEngineState.delay = calculateDelay(1000, gameEngineState.level);
-    gameEngineState.paused = gameEngineState.state.paused;
-    gameEngineState.gameOver = gameEngineState.state.gameOver;
-    console.log('game has started');
-    gameEngineState.intervalID = setInterval(gameLoop, gameEngineState.delay);
+  if (gameState.intervalID === 0) {
+    gameState.context = contextStore;
+    gameState.state = stateFuncs;
+    gameState.level = gameState.state.level;
+    gameState.delay = calculateDelay(1000, gameState.level);
+    gameState.paused = gameState.state.paused;
+    gameState.gameOver = gameState.state.gameOver;
+    console.log('Game has started');
+    gameState.intervalID = setInterval(gameLoop, gameState.delay);
     listen();
   }
 };
 
 const gameLoop = () => {
-    let { state: { setNextPiece }, paused } = gameEngineState;
+    const { state: { setNextPiece }, paused } = gameState;
   if(!paused) {
     lineHandler();
     if(!existsCurrentPiece()) {
         addPiece();
     }
-    gameEngineState.bag.length === 0 && fillBag();
-    setNextPiece(gameEngineState.bag[0]);
+    gameState.bag.length === 0 && fillBag();
+    setNextPiece(gameState.bag[0]);
     move('down');
   }
 };
 
 export {
-    gameEngineState,
+    gameState,
     start,
     gameLoop
 }
