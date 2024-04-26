@@ -8,7 +8,7 @@
 
 ## Overview
 
-Hello :) This is a custom tetris mock built by me, [RachNovo](https://github.com/RachNovo)!
+Hello :) This is a game built by me, [RachNovo](https://github.com/RachNovo)!
 
 To play the game, visit https://tetris-cb2dc.web.app/.
 
