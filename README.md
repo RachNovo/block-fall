@@ -35,10 +35,10 @@ _Prerequisites:_ Git, Node.js, npm
 2. Access the application by cloning the Github repository:
 
 ```bash
-$ git clone https://github.com/RachNovo/tetris.git
+$ git clone https://github.com/RachNovo/block-fall.git
 ```
 
-3. Navigate inside the directory: 'tetris' and run:
+3. Navigate inside the directory: 'block-fall' and run:
 
 ```bash
 $ npm install
@@ -69,14 +69,14 @@ $ npm test
 
 #### Game Engine
 
-- <u>Formulas:</u> Tetris, by nature, requires many formulas. I went old school with a pencil and paper, drew out the tetris board and created little tetriminos (the tetris pieces) out of paper to figure out where the tetris sub-pieces would move when going left, right and down and where they would spawn. I organized these formulas in data structures created with a focus on readability and ease of use within the code.
+- <u>Formulas:</u> This game, by nature, requires many formulas. I went old school with a pencil and paper, drew out the board and created little tetriminos (the pieces) out of paper to figure out where the sub-pieces would move when going left, right and down and where they would spawn. I organized these formulas in data structures created with a focus on readability and ease of use within the code.
 - <u>Testing:</u> I started this project using Test Driven Development. I made a list of requirements and built my test suite, adding and updating as requirements clarified. I finished with a suite of 74 tests, significantly reducing debugging time, ensuring reliable and maintainable code.
 
 #### UI
 
 - <u>HTML Canvas:</u> After completing the game engine, I needed a UI! I first built a game board using React but found that the way React updates was not quick enough for gameplay. I chose to use HTML Canvas to draw the pieces. It was a bit of a learning curve and things went wrong in interesting ways 😂 For example, the board is 101px wide to make sure the piece outlines are not cut off on one side or the other. I would love to learn more complex graphic rendering tools in the future!
 - <u>Tailwind CSS:</u> I had heard about Tailwind CSS and wanted to take this opportunity to try it out. Tailwind CSS is a utility-first CSS framework that streamlines web development by providing pre-defined utility classes for styling HTML elements. With a focus on simplicity and flexibility, Tailwind CSS enables rapid prototyping and efficient styling without the need for writing custom CSS. I used the tailwind css prettier plugin to keep my classNames in order.
-- <u>Audio:</u> I used the built in HTML Audio Element for my audio and added controls for playing, pausing and adjusting the volume! There are three royalty free versions of the classic tetris theme song to choose from: piano, strings or cossack!
+- <u>Audio:</u> I used the built in HTML Audio Element for my audio and added controls for playing, pausing and adjusting the volume! There are three royalty free versions of the classic theme song to choose from: piano, strings or cossack!
 
 #### Hosting
 

@@ -42,7 +42,7 @@ let mockGameState = {
   intervalID: 0,
 };
 
-describe("Tetris", () => {
+describe("Block Fall", () => {
   afterEach(() => {
     mockGameState.bag = [];
   });
