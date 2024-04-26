@@ -3,13 +3,24 @@
 1. [Overview](#overview)
 2. [Getting Started](#getting-started)
 3. [Tech Highlights](#tech-highlights)
-   <img width="547" alt="Screenshot 2024-04-09 at 3 13 49 PM" src="https://github.com/RachNovo/tetris/assets/44451197/f9a5985c-813a-46f1-a883-3fabedb4f21e">
+
+<img width="547" alt="Screenshot 2024-04-09 at 3 13 49 PM" src="https://github.com/RachNovo/tetris/assets/44451197/f9a5985c-813a-46f1-a883-3fabedb4f21e">
 
 ## Overview
 
 Hello :) This is a custom tetris mock built by me, [RachNovo](https://github.com/RachNovo)!
 
 To play the game, visit https://tetris-cb2dc.web.app/.
+
+### Built With
+
+- [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [React](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [HTML Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
+- [Firebase](https://firebase.google.com/)
+- [Mocha/Chai.js](https://mochajs.org/)
+- [Prettier](https://prettier.io/docs/en/)
 
 ## Getting Started
 
@@ -64,4 +75,4 @@ $ npm test
 
 #### Hosting
 
-- <u>Firebase:</u> This project leverages Firebase Hosting for seamless deployment, ensuring fast and reliable access to the game. Additionally, I plan to use Firebase's backend features to store user highscores securely, enabling personalized and interactive experiences.
+- <u>Firebase:</u> This project leverages Firebase Hosting for seamless deployment, ensuring fast and reliable access to the game.
