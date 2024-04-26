@@ -1,4 +1,4 @@
-# Tetris
+# Block Fall
 
 1. [Overview](#overview)
 2. [Getting Started](#getting-started)
