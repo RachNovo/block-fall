@@ -6,9 +6,8 @@ import PausedModal from "./modals/PausedModal.jsx";
 import GameOverModal from "./modals/GameOverModal.jsx";
 import HelpModal from "./modals/HelpModal.jsx";
 import Panel from "./panel/Panel.jsx";
-import { gameState } from "./gameEngine/gameState.js";
+import { gameState, start } from "./gameEngine/gameState.js";
 import { pause } from "./gameEngine/gameActions.js";
-import { start } from "./gameEngine/gameState.js";
 import piano from "./assets/music/piano.mp3";
 import strings from "./assets/music/strings.mp3";
 import cossack from "./assets/music/cossack.mp3";
@@ -106,7 +105,7 @@ export default function App() {
   }, [volume]);
 
   const handlePaused = () => {
-    pause();
+    pause(gameState);
   };
 
   const handleGameActive = () => {
@@ -127,7 +126,7 @@ export default function App() {
     const canvas = canvasRef.current;
     if (canvas && gameActive) {
       const context = canvas.getContext("2d");
-      start(context, state);
+      start(context, state, gameState);
     }
   }, [canvasRef, state, gameActive]);
 

@@ -18,7 +18,7 @@ let gameState = {
   intervalID: 0,
 };
 
-const start = (contextStore, stateFuncs) => {
+const start = (contextStore, stateFuncs, gameState) => {
   if (gameState.intervalID === 0) {
     gameState.context = contextStore;
     gameState.state = stateFuncs;
@@ -27,24 +27,26 @@ const start = (contextStore, stateFuncs) => {
     gameState.paused = gameState.state.paused;
     gameState.gameOver = gameState.state.gameOver;
     console.log("Game has started");
-    gameState.intervalID = setInterval(gameLoop, gameState.delay);
-    listen();
+    gameState.intervalID = setInterval(() => gameLoop(gameState), gameState.delay);
+    listen(gameState);
   }
 };
 
-const gameLoop = () => {
-  const {
-    state: { setNextPiece },
-    paused,
-  } = gameState;
+const gameLoop = (gameState) => {
+    const {
+        paused,
+        bag,
+        state: { setNextPiece }
+    } = gameState;
   if (!paused) {
-    lineHandler();
-    if (!existsCurrentPiece()) {
-      addPiece();
+    lineHandler(gameState);
+    if (!existsCurrentPiece(gameState)) {
+      addPiece(gameState);
     }
-    gameState.bag.length === 0 && fillBag();
-    setNextPiece(gameState.bag[0]);
-    move("down");
+    bag.length === 0 && fillBag(gameState);
+    const nextPiece = gameState.bag[0];
+    setNextPiece(nextPiece);
+    move("down", gameState);
   }
 };
 

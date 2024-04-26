@@ -1,9 +1,8 @@
 import { createBlankBoard } from "./util.js";
 import { drawBoard } from "./gameBoard.js";
 import { ROTATIONFORMULA } from "./constants.js";
-import { gameState } from "./gameState.js";
 
-const canMove = (direction) => {
+const canMove = (direction, gameState) => {
   const { board } = gameState;
   if (!board) return false;
   let canMove = true;
@@ -25,10 +24,10 @@ const canMove = (direction) => {
   return canMove;
 };
 
-const move = (direction) => {
+const move = (direction, gameState) => {
   const { paused, gameOver, board } = gameState;
   if (paused || gameOver) return;
-  if (!canMove(direction)) {
+  if (!canMove(direction, gameState)) {
     if (direction === "down") {
       board?.forEach((row) => {
         row?.forEach((space) => {
@@ -57,16 +56,16 @@ const move = (direction) => {
     });
   });
   gameState.board = newBoard;
-  drawBoard();
+  drawBoard(gameState);
 };
 
-const hardMoveDown = () => {
+const hardMoveDown = (gameState) => {
   for (let i = 0; i < 20; i++) {
-    move("down");
+    move("down", gameState);
   }
 };
 
-const canRotate = () => {
+const canRotate = (gameState) => {
   const { board } = gameState;
   let canRotate = true;
   board?.forEach((row, rowIndex) => {
@@ -89,9 +88,9 @@ const canRotate = () => {
   return canRotate;
 };
 
-const rotate = () => {
+const rotate = (gameState) => {
   const { paused, gameOver, board } = gameState;
-  if (paused || gameOver || !canRotate()) return;
+  if (paused || gameOver || !canRotate(gameState)) return;
   let newBoard = createBlankBoard();
   board?.forEach((row, rowIndex) => {
     row?.forEach((space, spaceIndex) => {
@@ -109,7 +108,7 @@ const rotate = () => {
     });
   });
   gameState.board = newBoard;
-  drawBoard();
+  drawBoard(gameState);
 };
 
 export { move, canMove, hardMoveDown, rotate, canRotate };

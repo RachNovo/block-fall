@@ -1,14 +1,13 @@
 import { gameLoop } from "./gameState.js";
 import { createCopy, calculateDelay } from "./util.js";
 import { drawBoard } from "./gameBoard.js";
-import { gameState } from "./gameState.js";
 
-const existsCurrentPiece = () => {
+const existsCurrentPiece = (gameState) => {
   const { board } = gameState;
   return board.some((row) => row.some((space) => space?.isCurrent));
 };
 
-const pause = () => {
+const pause = (gameState) => {
   const {
     state: { setPaused },
   } = gameState;
@@ -17,10 +16,21 @@ const pause = () => {
   console.log(`Game is ${gameState.paused ? "paused" : "running"}`);
 };
 
-const lineHandler = () => {
+const quit = (gameState) => {
+    const { state: { setGameOver }, intervalID } = gameState;
+    gameState.gameOver = true;
+    setGameOver(gameState.gameOver);
+    clearInterval(intervalID);
+    console.log("Game is over");
+};
+
+const lineHandler = (gameState) => {
   const {
-    state: { setLevel, setLines },
     board,
+    state: {
+      setLines,
+      setLevel
+    }
   } = gameState;
   const newBoard = createCopy(board);
   board.forEach((row, rowIndex) => {
@@ -32,25 +42,14 @@ const lineHandler = () => {
         setLevel(gameState.level);
         gameState.delay = calculateDelay(gameState.delay, gameState.level);
         clearInterval(gameState.intervalID);
-        gameState.intervalID = setInterval(gameLoop, gameState.delay);
+        gameState.intervalID = setInterval(() => gameLoop(gameState), gameState.delay);
       }
       newBoard.splice(rowIndex, 1);
       newBoard.unshift(Array(row.length).fill(null));
     }
   });
   gameState.board = newBoard;
-  drawBoard();
-};
-
-const quit = () => {
-  const {
-    intervalID,
-    state: { setGameOver },
-  } = gameState;
-  gameState.gameOver = true;
-  setGameOver(gameState.gameOver);
-  clearInterval(intervalID);
-  console.log("Game is over");
+  drawBoard(gameState);
 };
 
 export { existsCurrentPiece, pause, lineHandler, quit };

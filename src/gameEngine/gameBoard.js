@@ -1,9 +1,8 @@
 import { quit } from "./gameActions.js";
 import { COLORS, SPAWNPOSITIONS, PIECES } from "./constants.js";
 import { createCopy } from "./util.js";
-import { gameState } from "./gameState.js";
 
-const drawBoard = () => {
+const drawBoard = (gameState) => {
   const { context, board } = gameState;
   const pieceSize = 10;
   context?.clearRect(0, 0, context?.canvas.width, context?.canvas.height);
@@ -29,13 +28,24 @@ const drawBoard = () => {
   });
 };
 
-const addPiece = () => {
+const canAddPiece = (positions, gameState) => {
+    const { board } = gameState;
+    for (let subPiece in positions) {
+      let position = positions[subPiece];
+      if (board?.[position[0]]?.[position[1]] !== null) {
+        return false;
+      }
+    }
+    return true;
+};
+
+const addPiece = (gameState) => {
   const { board, bag } = gameState;
   let newBoard = createCopy(board);
   const newPiece = bag.shift();
   const positions = SPAWNPOSITIONS[newPiece];
-  if (!canAddPiece(positions)) {
-    quit();
+  if (!canAddPiece(positions, gameState)) {
+    quit(gameState);
     return;
   }
   for (let subPiece in positions) {
@@ -49,18 +59,7 @@ const addPiece = () => {
   gameState.board = newBoard;
 };
 
-const canAddPiece = (positions) => {
-  const { board } = gameState;
-  for (let subPiece in positions) {
-    let position = positions[subPiece];
-    if (board?.[position[0]]?.[position[1]] !== null) {
-      return false;
-    }
-  }
-  return true;
-};
-
-const fillBag = () => {
+const fillBag = (gameState) => {
   const pieceNames = ["I", "J", "L", "O", "S", "T", "Z"];
   let shuffledBag = pieceNames
     .map((piece) => ({ piece, sort: Math.random() }))

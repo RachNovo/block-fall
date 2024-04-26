@@ -1,5 +1,5 @@
 const calculateDelay = (baseDelay, level) => {
-  return Math.max(100, baseDelay * Math.pow(0.95, level - 1));
+  return Math.max(100, Math.round(baseDelay * Math.pow(0.95, level - 1)));
 };
 
 const createCopy = (board) => {
