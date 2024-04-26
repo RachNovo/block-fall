@@ -4,7 +4,7 @@
 2. [Getting Started](#getting-started)
 3. [Tech Highlights](#tech-highlights)
 
-<img width="547" alt="Screenshot 2024-04-09 at 3 13 49 PM" src="https://github.com/RachNovo/tetris/assets/44451197/f9a5985c-813a-46f1-a883-3fabedb4f21e">
+<img width="557" alt="Screenshot 2024-04-26 at 10 19 26 AM" src="https://github.com/RachNovo/tetris/assets/44451197/d6fa7ccb-4734-40c9-b3cb-a0d3ce3c8f88">
 
 ## Overview
 
@@ -57,6 +57,11 @@ Run the test suite using the following command:
 ```bash
 $ npm test
 ```
+
+<img width="819" alt="Screenshot 2024-04-26 at 10 21 51 AM" src="https://github.com/RachNovo/tetris/assets/44451197/ad03c993-4c9c-4372-ac15-4bab2714805c">
+
+<img width="915" alt="Screenshot 2024-04-26 at 10 22 06 AM" src="https://github.com/RachNovo/tetris/assets/44451197/2563bfc6-622d-4e64-ba1c-a5a798c18e83">
+
 
 ## Tech Highlights
 
