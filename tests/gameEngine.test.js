@@ -1,11 +1,19 @@
 import * as chai from "chai";
 import * as boards from "./boardStorage/boards.js";
-import { SPAWNPOSITIONS } from '../src/gameEngine/constants.js';
-import { existsCurrentPiece, pause, lineHandler } from '../src/gameEngine/gameActions.js';
-import { addPiece } from '../src/gameEngine/gameBoard.js';
-import { move, hardMoveDown, rotate } from '../src/gameEngine/gameMovements.js';
-import { gameLoop } from '../src/gameEngine/gameState.js';
-import { createBlankBoard, calculateDelay, createCopy } from '../src/gameEngine/util.js';
+import { SPAWNPOSITIONS } from "../src/gameEngine/constants.js";
+import {
+  existsCurrentPiece,
+  pause,
+  lineHandler,
+} from "../src/gameEngine/gameActions.js";
+import { addPiece } from "../src/gameEngine/gameBoard.js";
+import { move, hardMoveDown, rotate } from "../src/gameEngine/gameMovements.js";
+import { gameLoop } from "../src/gameEngine/gameState.js";
+import {
+  createBlankBoard,
+  calculateDelay,
+  createCopy,
+} from "../src/gameEngine/util.js";
 const expect = chai.expect;
 
 let mockGameState = {
@@ -18,7 +26,7 @@ let mockGameState = {
   gameOver: false,
   context: {
     fillStyle: () => {},
-    canvas: { width: 0, height: 0},
+    canvas: { width: 0, height: 0 },
     clearRect: () => {},
     fillRect: () => {},
     strokeRect: () => {},
@@ -35,7 +43,6 @@ let mockGameState = {
 };
 
 describe("Tetris", () => {
-
   afterEach(() => {
     mockGameState.bag = [];
   });
@@ -85,7 +92,12 @@ describe("Tetris", () => {
     },
   };
 
-  const generateMockBoard = (piece, orientation, offSet = [3, 3], isCurrent = true) => {
+  const generateMockBoard = (
+    piece,
+    orientation,
+    offSet = [3, 3],
+    isCurrent = true,
+  ) => {
     const board = [
       [null, null, null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null, null, null],
@@ -167,22 +179,22 @@ describe("Tetris", () => {
           const thirdPosition = generateMockBoard(piece, 3);
           it(`SHOULD go to rotation one from default orientation`, () => {
             mockGameState.board = defaultPosition;
-            rotate(mockGameState)
+            rotate(mockGameState);
             expect(mockGameState.board).to.eql(firstPosition);
           });
           it(`SHOULD go to rotation two from rotation one orientation`, () => {
             mockGameState.board = firstPosition;
-            rotate(mockGameState)
+            rotate(mockGameState);
             expect(mockGameState.board).to.eql(secondPosition);
           });
           it(`SHOULD go to rotation three from rotation two orientation`, () => {
             mockGameState.board = secondPosition;
-            rotate(mockGameState)
+            rotate(mockGameState);
             expect(mockGameState.board).to.eql(thirdPosition);
           });
           it(`SHOULD go back to default from rotation three orientation`, () => {
             mockGameState.board = thirdPosition;
-            rotate(mockGameState)
+            rotate(mockGameState);
             expect(mockGameState.board).to.eql(defaultPosition);
           });
         });
@@ -285,7 +297,9 @@ describe("Tetris", () => {
       mockGameState.board = boards.addPieceAfterPieceHitsPieceBefore;
       mockGameState.bag = ["J"];
       gameLoop(mockGameState);
-      expect(mockGameState.board).to.eql(boards.addPieceAfterPieceHitsPieceAfter);
+      expect(mockGameState.board).to.eql(
+        boards.addPieceAfterPieceHitsPieceAfter,
+      );
     });
     it("next piece SHOULD NOT be added if there is no room", () => {
       mockGameState.board = boards.noMoreRoom;
@@ -340,10 +354,8 @@ describe("Tetris", () => {
       expect(mockGameState.board).to.eql(boards.blank);
       expect(mockGameState.lines).to.eql(1);
       mockGameState.board = boards.withMultipleLines;
-      lineHandler(mockGameState)
-      expect(mockGameState.board).to.eql(
-        boards.blank,
-      );
+      lineHandler(mockGameState);
+      expect(mockGameState.board).to.eql(boards.blank);
       expect(mockGameState.lines).to.eql(5);
     });
     it("speed SHOULD increase each 10 lines", () => {
@@ -362,7 +374,7 @@ describe("Tetris", () => {
         const level = i + 1;
         expect(calculateDelay(1000, level)).to.eql(speed);
       });
-    })
+    });
     it("blankBoard SHOULD create a blank board", () => {
       expect(createBlankBoard()).to.eql(boards.blank);
     });
@@ -371,9 +383,7 @@ describe("Tetris", () => {
       expect(createCopy(boards.withMultipleLines)).to.eql(
         boards.withMultipleLines,
       );
-      expect(createCopy(boards.cannotMoveRight)).to.eql(
-        boards.cannotMoveRight,
-      );
+      expect(createCopy(boards.cannotMoveRight)).to.eql(boards.cannotMoveRight);
       expect(createCopy(boards.hardMoveDownBefore)).to.eql(
         boards.hardMoveDownBefore,
       );

@@ -27,17 +27,20 @@ const start = (contextStore, stateFuncs, gameState) => {
     gameState.paused = gameState.state.paused;
     gameState.gameOver = gameState.state.gameOver;
     console.log("Game has started");
-    gameState.intervalID = setInterval(() => gameLoop(gameState), gameState.delay);
+    gameState.intervalID = setInterval(
+      () => gameLoop(gameState),
+      gameState.delay,
+    );
     listen(gameState);
   }
 };
 
 const gameLoop = (gameState) => {
-    const {
-        paused,
-        bag,
-        state: { setNextPiece }
-    } = gameState;
+  const {
+    paused,
+    bag,
+    state: { setNextPiece },
+  } = gameState;
   if (!paused) {
     lineHandler(gameState);
     if (!existsCurrentPiece(gameState)) {

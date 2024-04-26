@@ -17,20 +17,20 @@ const pause = (gameState) => {
 };
 
 const quit = (gameState) => {
-    const { state: { setGameOver }, intervalID } = gameState;
-    gameState.gameOver = true;
-    setGameOver(gameState.gameOver);
-    clearInterval(intervalID);
-    console.log("Game is over");
+  const {
+    state: { setGameOver },
+    intervalID,
+  } = gameState;
+  gameState.gameOver = true;
+  setGameOver(gameState.gameOver);
+  clearInterval(intervalID);
+  console.log("Game is over");
 };
 
 const lineHandler = (gameState) => {
   const {
     board,
-    state: {
-      setLines,
-      setLevel
-    }
+    state: { setLines, setLevel },
   } = gameState;
   const newBoard = createCopy(board);
   board.forEach((row, rowIndex) => {
@@ -42,7 +42,10 @@ const lineHandler = (gameState) => {
         setLevel(gameState.level);
         gameState.delay = calculateDelay(gameState.delay, gameState.level);
         clearInterval(gameState.intervalID);
-        gameState.intervalID = setInterval(() => gameLoop(gameState), gameState.delay);
+        gameState.intervalID = setInterval(
+          () => gameLoop(gameState),
+          gameState.delay,
+        );
       }
       newBoard.splice(rowIndex, 1);
       newBoard.unshift(Array(row.length).fill(null));

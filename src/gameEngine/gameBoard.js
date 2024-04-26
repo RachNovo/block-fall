@@ -29,14 +29,14 @@ const drawBoard = (gameState) => {
 };
 
 const canAddPiece = (positions, gameState) => {
-    const { board } = gameState;
-    for (let subPiece in positions) {
-      let position = positions[subPiece];
-      if (board?.[position[0]]?.[position[1]] !== null) {
-        return false;
-      }
+  const { board } = gameState;
+  for (let subPiece in positions) {
+    let position = positions[subPiece];
+    if (board?.[position[0]]?.[position[1]] !== null) {
+      return false;
     }
-    return true;
+  }
+  return true;
 };
 
 const addPiece = (gameState) => {

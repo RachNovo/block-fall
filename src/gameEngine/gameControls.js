@@ -19,10 +19,10 @@ const handleKeyDown = (event, gameState) => {
 };
 
 const listen = (gameState) => {
-    if (typeof window !== "undefined") {
-      const boundHandleKeyDown = (event) => handleKeyDown(event, gameState);
-      document.addEventListener("keydown", boundHandleKeyDown);
-    }
-  };
+  if (typeof window !== "undefined") {
+    const boundHandleKeyDown = (event) => handleKeyDown(event, gameState);
+    document.addEventListener("keydown", boundHandleKeyDown);
+  }
+};
 
 export { listen };
